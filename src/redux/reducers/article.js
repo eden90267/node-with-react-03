@@ -6,7 +6,8 @@ export function article(state=[], action) {
         title: action.title,
         content: action.content,
         author: action.author,
-        date: action.date,
+        PostDate: action.date,
+        avatar: action.avatar
       }];
     default:
       return state;
