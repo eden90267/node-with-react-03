@@ -60,13 +60,39 @@ class MyArticle extends Component {
         content: this.refs.content1.refs.div1.innerHTML,
         id: this.state.activeArticle._id
       })
-      .then((response) => {
+      .then(response => {
         this.setState({articles: response.data}, () => {
           console.log(this.state.articles);
           this.forceUpdate();
         });
       });
   };
+
+  componentWillMount() {
+    if (this.props.userInfo) {
+      axios
+        .get('/userArticles/' + this.props.userInfo.account)
+        .then(response => {
+          console.log(response);
+          this.setState({articles: response.data});
+          this.setState({loading: false});
+        });
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.userInfo) {
+      if (this.state.userInfoFlag) {
+        this.setState({userInfoFlag: false});
+        axios
+          .get('/userArticles/' + this.props.userInfo.account)
+          .then(response => {
+            this.setState({articles: response.data});
+            this.setState({loading: false});
+          });
+      }
+    }
+  }
 
   render() {
     return (
@@ -84,6 +110,7 @@ class MyArticle extends Component {
                 context={this}
                 activeArticle={this.state.activeArticle}
                 confirmBtn={true}
+                contentEditable={true}
               />
               :
               ''
@@ -105,7 +132,7 @@ class MyArticle extends Component {
                     }
                     secondaryTextLines={2}
                   />
-                  <Divider inset={true} />
+                  <Divider inset={true}/>
                 </div>
               )
             })
@@ -116,3 +143,10 @@ class MyArticle extends Component {
   }
 
 }
+
+const mapStateToProps = state => ({
+  userInfo: state.userInfo,
+  articles: state.article
+});
+
+export default connect(mapStateToProps, {})(MyArticle);

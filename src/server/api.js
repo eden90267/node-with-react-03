@@ -23,9 +23,9 @@ exports.api = (app) => {
   });
 
   app.get('/userArticles/:user', (req, res) => {
-    console.log(req.param.user);
+    console.log(req.params.user);
     Post
-      .find({posterAccount: req.param.user})
+      .find({posterAccount: req.params.user})
       .then(data => {
         res.end(JSON.stringify(data));
       });

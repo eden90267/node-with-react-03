@@ -5,6 +5,7 @@ import Main from '../containers/Main';
 import Login from "../components/Login";
 import Register from "../components/Register";
 import TodoList from "../containers/TodoList";
+import MyArticle from "../components/MyArticle";
 
 export default (
   <Router history={browserHistory} component={App}>
@@ -14,5 +15,6 @@ export default (
     <Route path="/main" component={Main}/>
     <Route path="/login" component={Login}/>
     <Route path="/register" component={Register}/>
+    <Route path="/myarticle" component={MyArticle}/>
   </Router>
 );

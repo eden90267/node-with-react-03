@@ -12,7 +12,8 @@ const style = {
   container: {
     width: '100%',
     height: '48px',
-    background: 'yellow',
+    background: 'white',
+    boxShadow: '4px 4px 9px #888888',
     position: 'fixed',
     top: '0px',
     zIndex: '10000'
@@ -30,7 +31,6 @@ const style = {
   menu: {
     marginTop: '-50px',
     float: 'right',
-    marginRight: '1%'
   }
 };
 
@@ -51,13 +51,13 @@ class Header extends Component {
   logout = () => {
     const context = this;
     axios.post('/logout', {})
-      .then((response) => {
+      .then(response => {
         context.props.logout();
         browserHistory.push('/login');
       })
       .catch((error) => {
         console.log(error);
-      })
+      });
   };
 
   render() {
