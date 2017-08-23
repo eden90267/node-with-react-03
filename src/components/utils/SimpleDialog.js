@@ -1,7 +1,23 @@
 import React, {Component} from 'react';
-import {Dialog, FlatButton, RaisedButton} from 'material-ui';
+import {Dialog, FlatButton} from 'material-ui';
 
-export default class DialogExampleSimple extends Component {
+// confirm 點擊確認後的callback
+//
+// close 用來dispatch waiting = false 的action
+//
+// <SimpleDialog context={this} />  注意，必須給入context
+//
+//在context 加上 state  : dialog   dialogText
+//
+//        {
+//           this.state.dialog
+//           ?
+//           <SimpleDialog context={this} />
+//           :
+//           ''
+//         }
+//
+export default class SimpleDialog extends Component {
 
   constructor() {
     super(...arguments);
@@ -14,6 +30,12 @@ export default class DialogExampleSimple extends Component {
     this.props.context.setState({
       dialog: false
     });
+    if (typeof this.props.close !== 'undefined') {
+      this.props.close(); // dispatch action
+    }
+    if (typeof this.props.confirm !== 'undefined') {
+      this.props.confirm();
+    }
   };
 
   render() {
