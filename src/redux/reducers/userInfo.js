@@ -6,6 +6,12 @@ export function userInfo(state={}, action) {
         account: action.payload.account,
         email: action.payload.email,
         name: action.payload.name,
+        avatar: action.payload.avatar,
+        RegistedDate: action.payload.RegistedDate,
+        mobile: action.payload.mobile,
+        address: action.payload.address,
+        hobby: action.payload.hobby,
+        birthday: action.payload.birthday,
         login: true
       };
     case 'LOG_OUT':
@@ -14,6 +20,7 @@ export function userInfo(state={}, action) {
         account: '',
         email: '',
         name: '',
+        avatar: '',
         login: false
       };
     default:

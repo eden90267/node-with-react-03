@@ -60,6 +60,7 @@ class Login extends Component {
             if (typeof response.data === 'string') {
               return // 如session內無user會回傳空值 type為String
             }
+            console.log(response.data);
             context.props.userInfoAction(response.data);
             browserHistory.push('/main')
           })

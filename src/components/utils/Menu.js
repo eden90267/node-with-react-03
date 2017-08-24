@@ -19,6 +19,9 @@ export default class DropDownMenuSimpleExample extends Component {
 
   handleChange = (event, index, value) => {
     switch (index) {
+      case 1:
+        browserHistory.push('/personalinfo');
+        return;
       case 2:
         browserHistory.push('/myarticle');
         return;

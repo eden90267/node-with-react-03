@@ -11,7 +11,7 @@ exports.api = (app) => {
   });
 
   app.get('/getUser', (req, res) => {
-    User.find({account: req.session.user}, {_id: 0, account: 1, email: 1, name: 1})
+    User.find({account: req.session.user}, {_id:0,account:1,email:1,name:1,avatar:1,RegistedDate:1,mobile:1,address:1,hobby:1,birthday:1})
       .then(data => res.end(JSON.stringify(data[0])))
       .catch(err => console.log(err));
   });
