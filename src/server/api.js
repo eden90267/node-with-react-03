@@ -123,7 +123,7 @@ exports.api = (app) => {
 
   app.put('/UpdateUserInfo', (req, res) => {
     User.update({account: req.body.account}, {
-      avatar: req.body.avatar,
+      // avatar: req.body.avatar,
       name: req.body.name,
       mobile: req.body.mobile,
       address: req.body.address,

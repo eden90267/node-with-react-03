@@ -103,42 +103,43 @@ class PersonalInfo extends Component {
 
     const context = this;
     findDOMNode(this.refs.fileInput).addEventListener('change', () => {
-      let FR = new FileReader();
-      FR.onload = (e) => {
-        let base64 = e.target.result.replace(/^data:image\/(png|jpg);base64,/, '');
+      if (findDOMNode(this.refs.fileInput).files && findDOMNode(this.refs.fileInput).files[0]) {
+        let FR = new FileReader();
+        FR.onload = (e) => {
+          let base64 = e.target.result.replace(/^data:image\/(png|jpg|jpeg);base64,/, '');
 
-        let xhttp = new XMLHttpRequest();
-        xhttp.open('POST', 'https://api.imgur.com/3/image', true);
-        xhttp.setRequestHeader('Content-type', 'application/json');
-        xhttp.setRequestHeader('Authorization', 'Client-ID b50a7351eee91f0');
-        xhttp.send(JSON.stringify({'image': base64}));
-        xhttp.onreadystatechange = () => {
-          if (xhttp.readyState === 4 && xhttp.status === 200) {
-            let avatarSrc = JSON.parse(xhttp.responseText).data.link;
-            findDOMNode(context.refs.avatar).src = avatarSrc;
-            axios
-              .put('/UpdateUserInfo', {
-                avatar: avatarSrc,
-                account: context.props.userInfo.account,
-                name: context.state.name,
-                mobile: context.state.mobile,
-                address: context.state.address,
-                hobby: context.state.hobby,
-                birthday: context.state.date,
-              })
-              .then((res) => {
-                console.log(res.data);
-              })
-          }
+          let xhttp = new XMLHttpRequest();
+          xhttp.open('POST', 'https://api.imgur.com/3/image', true);
+          xhttp.setRequestHeader("Content-type", "application/json");
+          xhttp.setRequestHeader("Authorization", "Client-ID 4cbec30ffcbc569");
+          xhttp.send(JSON.stringify({'image': base64}));
+          xhttp.onreadystatechange = () => {
+            if (xhttp.readyState === 4 && xhttp.status === 200) {
+              let avatarSrc = JSON.parse(xhttp.responseText).data.link;
+              findDOMNode(context.refs.avatar).src = avatarSrc;
+              axios
+                .put('/UpdateUserInfo', {
+                  avatar: avatarSrc,
+                  account: context.props.userInfo.account,
+                  name: context.state.name,
+                  mobile: context.state.mobile,
+                  address: context.state.address,
+                  hobby: context.state.hobby,
+                  birthday: context.state.date,
+                })
+                .then((res) => {
+                  console.log(res.data);
+                })
+            }
+          };
         };
-      };
-      FR.readAsDataURL(findDOMNode(this.refs.fileInput).files[0]);
+        FR.readAsDataURL(findDOMNode(this.refs.fileInput).files[0]);
+      }
     });
 
   }
 
   render() {
-    console.log(this.props.userInfo);
     return (
       <div style={style.container}>
         <div style={style.left}>

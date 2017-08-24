@@ -62,7 +62,7 @@ export default class ArticlePostModel extends Component {
     this.setState({title: e.target.value});
   };
 
-  handleCloase = () => {
+  handleClose = () => {
     this.props.context.setState({articlePostModal: false});
   };
 
@@ -98,19 +98,19 @@ export default class ArticlePostModel extends Component {
       this.setState({content: this.refs.div1.innerHTML});
     });
     const context = this;
-    findDOMNode(this.refs.fileInput).addEventListener('change', () => {
-      if (findDOMNode(this.refs.fileInput).files && findDOMNode(this.refs.fileInput).files[0]) {
-        var FR = new FileReader();
-        FR.onload = function (e) {
-          let base64 = e.target.result.replace(/^data:image\/(png|jpg);base64,/, "");
+    findDOMNode(context.refs.fileInput).addEventListener('change', () => {
+      if (findDOMNode(context.refs.fileInput).files && findDOMNode(context.refs.fileInput).files[0]) {
+        let FR = new FileReader();
+        FR.onload = (e) => {
+          let base64 = e.target.result.replace(/^data:image\/(png|jpg|jpeg);base64,/, "");
 
           let xhttp = new XMLHttpRequest();
           xhttp.open('POST', 'https://api.imgur.com/3/image', true);
           xhttp.setRequestHeader('Content-type', 'application/json');
-          xhttp.setRequestHeader('Authorization', 'Client-ID b50a7351eee91f0');
+          xhttp.setRequestHeader('Authorization', 'Client-ID 4cbec30ffcbc569');
           xhttp.send(JSON.stringify({'image': base64}));
           xhttp.onreadystatechange = function () {
-            if (xhttp.readyState == 4 && xhttp.status == 200) {
+            if (xhttp.readyState === 4 && xhttp.status === 200) {
               let para = document.createElement('img');
               para.heigh = 150;
               para.src = JSON.parse(xhttp.responseText).data.link;
@@ -118,7 +118,7 @@ export default class ArticlePostModel extends Component {
             }
           };
         };
-        FR.readAsDataURL(findDOMNode((this.refs.fileInput).files[0]));
+        FR.readAsDataURL(findDOMNode((context.refs.fileInput).files[0]));
       }
     });
   }
